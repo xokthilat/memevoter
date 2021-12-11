@@ -62,12 +62,9 @@ class CountdownCubit extends Cubit<String> {
       return "";
     }
 
-    // calcute time used since last round end
-    var timeUsedSinceLastRound = usedTimeInSec -
-        ((usedTimeInSec ~/ roundLifeTimeInSec) * roundLifeTimeInSec);
-
     // get time left until this round end
-    var secondLeft = roundLifeTimeInSec - timeUsedSinceLastRound;
+    var secondLeft = getNextRoundTimeLeftInSecond(roundLifeTimeInSec);
+
     var minLeft = Duration(seconds: secondLeft).inMinutes;
     if (roundLifeTimeInSec > 60) {
       return "${minLeft == 0 ? "" : minLeft.toString() + ":"}${formatter.format(minLeft == 0 ? secondLeft : secondLeft - (60 * minLeft))} seconds";
@@ -81,6 +78,7 @@ class CountdownCubit extends Cubit<String> {
         ((usedTimeInSec ~/ roundLifeTimeInSec) * roundLifeTimeInSec);
     // get time left until this round end
     var secondLeft = roundLifeTimeInSec - timeUsedSinceLastRound;
+
     return secondLeft;
   }
 }
